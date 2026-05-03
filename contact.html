@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Pratyusha Chakraborty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #f8f8f7;
+    --surface:     #f0efed;
+    --surface-2:   #eaeae8;
+    --border:      #d8d6d2;
+    --border-lt:   #e8e6e2;
+    --muted:       #9a9590;
+    --mid:         #6e6a65;
+    --ink:         #2a2724;
+    --maroon:      #6b1f2a;
+    --maroon-md:   #8c2635;
+    --maroon-lt:   #a83040;
+    --maroon-pale: #f5eced;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+  }
+
+  .top-accent {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--maroon) 0%, var(--maroon-lt) 60%, transparent 100%);
+    z-index: 100;
+  }
+
+  /* ── Site header ── */
+  header {
+    position: fixed; top: 3px; left: 0; right: 0;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 52px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-lt);
+    z-index: 50;
+  }
+
+  .back-link {
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    transition: color 0.2s;
+  }
+  .back-link::before { content: '←'; font-size: 13px; }
+  .back-link:hover { color: var(--maroon); }
+
+  .site-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1rem;
+    color: var(--mid); letter-spacing: 0.5px;
+  }
+
+  /* ── Full-height layout ── */
+  .page {
+    width: 100vw; height: 100vh;
+    padding-top: 55px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  /* ── Left: heading block ── */
+  .left {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0 64px 40px 52px;
+    background: var(--bg);
+  }
+
+  .overline {
+    font-size: 9px; letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--maroon); font-weight: 500;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 4vw, 4.2rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--ink);
+  }
+
+  h1 em { font-style: italic; color: var(--maroon); }
+
+  .sub {
+    margin-top: 18px;
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.8; max-width: 300px;
+  }
+
+  .divider-h {
+    width: 40px; height: 1px;
+    background: var(--maroon); opacity: 0.4;
+    margin: 28px 0;
+  }
+
+  /* Response time badge */
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--maroon-pale);
+    border: 1px solid rgba(107,31,42,0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--maroon);
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--maroon-lt);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* ── Vertical divider ── */
+  .vr {
+    background: var(--border);
+    align-self: stretch; position: relative;
+  }
+
+  .vr::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--maroon);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--maroon-lt);
+  }
+
+  /* ── Right: contact items ── */
+  .right {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0 52px 40px 64px;
+    background: var(--surface);
+    gap: 0;
+  }
+
+  .contact-item {
+    display: flex; align-items: center;
+    gap: 20px;
+    padding: 18px 12px;
+    border-bottom: 1px solid var(--border-lt);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    border-left: 2px solid transparent;
+    margin-left: -14px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .contact-item:first-child { border-top: 1px solid var(--border-lt); }
+
+  .contact-item:nth-child(1) { animation-delay: 0.4s; }
+  .contact-item:nth-child(2) { animation-delay: 0.52s; }
+  .contact-item:nth-child(3) { animation-delay: 0.64s; }
+  .contact-item:nth-child(4) { animation-delay: 0.76s; }
+  .contact-item:nth-child(5) { animation-delay: 0.88s; }
+
+  .contact-item:hover {
+    background: var(--maroon-pale);
+    border-left-color: var(--maroon);
+    padding-left: 20px;
+  }
+
+  .contact-icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .contact-item:hover .contact-icon {
+    background: var(--maroon-pale);
+    border-color: rgba(107,31,42,0.3);
+  }
+
+  .contact-icon svg {
+    width: 16px; height: 16px;
+    stroke: var(--mid); fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke 0.25s;
+  }
+
+  .contact-item:hover .contact-icon svg { stroke: var(--maroon); }
+
+  .contact-text { flex: 1; }
+
+  .contact-label {
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    margin-bottom: 3px;
+  }
+
+  .contact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400;
+    color: var(--mid);
+    transition: color 0.25s;
+    letter-spacing: 0.3px;
+  }
+
+  .contact-item:hover .contact-value { color: var(--ink); }
+
+  .contact-arrow {
+    font-size: 14px; color: var(--border);
+    transition: color 0.25s, transform 0.25s;
+  }
+
+  .contact-item:hover .contact-arrow {
+    color: var(--maroon-lt);
+    transform: translateX(3px);
+  }
+
+  /* ── Footer ── */
+  .footer-strip {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 34px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 52px;
+    background: var(--bg); border-top: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  .footer-strip span {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ── Animations ── */
+  .left  { opacity: 0; animation: fadeUp 0.8s ease 0.1s forwards; }
+  .right { opacity: 0; animation: fadeUp 0.8s ease 0.25s forwards; }
+  .vr    { opacity: 0; animation: fadeIn 0.5s ease 0.4s forwards; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ── Mobile ── */
+  @media (max-width: 700px) {
+    html, body { overflow: auto; }
+    .page { grid-template-columns: 1fr; height: auto; }
+    .vr { display: none; }
+    .left  { padding: 36px 28px 28px; }
+    .right { padding: 24px 28px 80px; }
+    .contact-item { margin-left: 0; }
+    header { padding: 0 28px; }
+    .footer-strip { padding: 0 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-accent"></div>
+
+<header>
+  <a href="index.html" class="back-link">Home</a>
+  <span class="site-name">Pratyusha Chakraborty</span>
+</header>
+
+<div class="page">
+
+  <!-- Left: intro -->
+  <div class="left">
+    <p class="overline">Get in touch</p>
+    <h1>Let's <em>Connect</em></h1>
+    <p class="sub">Whether it's a collaboration, a conversation, or just a hello — I'd love to hear from you.</p>
+    <div class="divider-h"></div>
+    <span class="badge">
+      <span class="badge-dot"></span>
+      Usually responds within a day
+    </span>
+  </div>
+
+  <div class="vr"></div>
+
+  <!-- Right: contact details -->
+  <div class="right">
+
+    <a class="contact-item" href="tel:+918013037118">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <p class="contact-label">Phone</p>
+        <p class="contact-value">+91 8013 037 118</p>
+      </div>
+      <span class="contact-arrow">→</span>
+    </a>
+
+    <a class="contact-item" href="mailto:pratyusha.chakraborty.work@gmail.com">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <p class="contact-label">Email</p>
+        <p class="contact-value">pratyusha.chakraborty.work@gmail.com</p>
+      </div>
+      <span class="contact-arrow">→</span>
+    </a>
+
+    <a class="contact-item" href="https://www.linkedin.com/in/pratyusha-chakraborty03?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+          <rect x="2" y="9" width="4" height="12"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <p class="contact-label">LinkedIn</p>
+        <p class="contact-value">pratyusha-chakraborty03</p>
+      </div>
+      <span class="contact-arrow">→</span>
+    </a>
+
+    <a class="contact-item" href="https://www.instagram.com/prat_zz03?utm_source=qr&igsh=MTZmaWJlb3VkMjJhdg==" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <p class="contact-label">Instagram</p>
+        <p class="contact-value">@prat_zz03</p>
+      </div>
+      <span class="contact-arrow">→</span>
+    </a>
+
+    <a class="contact-item" href="https://medium.com/@chakpratyu03" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M13 12a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5z"/>
+          <path d="M19 12c0 2.21-.9 4-2 4s-2-1.79-2-4 .9-4 2-4 2 1.79 2 4z"/>
+          <path d="M22 12c0 1.66-.22 3-.5 3s-.5-1.34-.5-3 .22-3 .5-3 .5 1.34.5 3z"/>
+        </svg>
+      </div>
+      <div class="contact-text">
+        <p class="contact-label">Medium</p>
+        <p class="contact-value">@chakpratyu03</p>
+      </div>
+      <span class="contact-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+<div class="footer-strip">
+  <span>© 2026 Pratyusha Chakraborty</span>
+  <span>From Words to World.</span>
+</div>
+
+</body>
+</html>
