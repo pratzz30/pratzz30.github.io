@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #f8f8f7;
+    --surface:     #f0efed;
+    --surface-2:   #eaeae8;
+    --border:      #d8d6d2;
+    --border-lt:   #e8e6e2;
+    --muted:       #9a9590;
+    --mid:         #6e6a65;
+    --ink:         #2a2724;
+    --maroon:      #6b1f2a;
+    --maroon-md:   #8c2635;
+    --maroon-lt:   #a83040;
+    --maroon-pale: #f5eced;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+
+  .top-accent {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--maroon) 0%, var(--maroon-lt) 60%, transparent 100%);
+    z-index: 100;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; right: 0;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(107,31,42,0.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .page {
+    position: relative; z-index: 1;
+    width: 100vw; height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 72px 64px 60px 48px;
+    background: var(--bg);
+  }
+
+  .portrait-wrap {
+    position: relative;
+    width: 160px; height: 160px;
+    margin-bottom: 32px;
+  }
+
+  .portrait-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--maroon) 0%, var(--border) 30%, var(--maroon-lt) 60%, var(--border) 80%, var(--maroon) 100%);
+    animation: spin 14s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .portrait-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--bg);
+    z-index: 0;
+  }
+
+  .portrait {
+    position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    z-index: 1;
+    background: var(--surface-2);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+  .portrait-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--maroon);
+    letter-spacing: 2px;
+  }
+
+  .name-block { text-align: right; }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .name em { font-style: italic; color: var(--maroon); }
+
+  .title-line {
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .divider-short {
+    width: 36px; height: 1px;
+    background: var(--maroon);
+    margin: 22px 0 22px auto;
+    opacity: 0.5;
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.75;
+    text-align: right;
+    max-width: 240px;
+  }
+
+  .vr {
+    background: var(--border);
+    align-self: stretch;
+    position: relative;
+  }
+
+  .vr::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--maroon);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--maroon-lt);
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px 48px 60px 64px;
+    background: var(--surface);
+  }
+
+  .nav-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--maroon);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+
+  nav { display: flex; flex-direction: column; }
+
+  nav a {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    text-decoration: none;
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--border-lt);
+    transition: all 0.28s ease;
+    border-left: 2px solid transparent;
+    margin-left: -14px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  nav a:first-child { border-top: 1px solid var(--border-lt); }
+  nav a:nth-child(1) { animation-delay: 0.45s; }
+  nav a:nth-child(2) { animation-delay: 0.57s; }
+  nav a:nth-child(3) { animation-delay: 0.69s; }
+  nav a:nth-child(4) { animation-delay: 0.81s; }
+
+  nav a .nav-num {
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--muted); font-weight: 400;
+    min-width: 20px; transition: color 0.25s;
+  }
+
+  nav a .nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.55rem, 2vw, 2.1rem);
+    font-weight: 300;
+    color: var(--mid);
+    letter-spacing: 0.5px;
+    transition: color 0.25s, transform 0.25s;
+    display: inline-block;
+  }
+
+  nav a .nav-desc {
+    margin-left: auto;
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0; transform: translateX(-6px);
+    transition: all 0.28s ease;
+    white-space: nowrap;
+  }
+
+  nav a:hover { background: var(--maroon-pale); border-left-color: var(--maroon); padding-left: 20px; }
+  nav a:hover .nav-num  { color: var(--maroon-lt); }
+  nav a:hover .nav-title { color: var(--ink); transform: translateX(2px); }
+  nav a:hover .nav-desc  { opacity: 1; transform: translateX(0); color: var(--maroon); }
+
+  .footer-strip {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 34px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  .footer-strip span {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  .footer-links { display: flex; gap: 24px; }
+
+  .footer-links a {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--maroon); }
+
+  .left  { opacity: 0; animation: fadeUp 0.8s ease 0.1s forwards; }
+  .right { opacity: 0; animation: fadeUp 0.8s ease 0.25s forwards; }
+  .vr    { opacity: 0; animation: fadeIn 0.5s ease 0.5s forwards; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  @media (max-width: 700px) {
+    html, body { overflow: auto; }
+    .page { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
+    .vr { display: none; }
+    .left { align-items: center; text-align: center; padding: 72px 32px 36px; }
+    .name-block, .tagline { text-align: center; }
+    .divider-short { margin: 20px auto; }
+    .right { padding: 32px 32px 80px; }
+    nav a { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-accent"></div>
+
+<div class="page">
+
+  <div class="left">
+    <div class="portrait-wrap">
+      <div class="portrait">
+        <!-- Replace with: <img src="your-photo.jpg" alt="Your Name"> -->
+        <span class="portrait-initials">YN</span>
+      </div>
+    </div>
+
+    <div class="name-block">
+      <h1 class="name">Your <em>Name</em></h1>
+      <p class="title-line">Writer &nbsp;·&nbsp; Thinker &nbsp;·&nbsp; Creator</p>
+    </div>
+
+    <div class="divider-short"></div>
+
+    <p class="tagline">Exploring ideas at the intersection of technology, health, and the human experience.</p>
+  </div>
+
+  <div class="vr"></div>
+
+  <div class="right">
+    <p class="nav-label">Navigate</p>
+    <nav>
+      <a href="about.html">
+        <span class="nav-num">01</span>
+        <span class="nav-title">About</span>
+        <span class="nav-desc">Who I am</span>
+      </a>
+      <a href="blogs.html">
+        <span class="nav-num">02</span>
+        <span class="nav-title">Blogs</span>
+        <span class="nav-desc">Writing & ideas</span>
+      </a>
+      <a href="work.html">
+        <span class="nav-num">03</span>
+        <span class="nav-title">Work</span>
+        <span class="nav-desc">Projects & portfolio</span>
+      </a>
+      <a href="contact.html">
+        <span class="nav-num">04</span>
+        <span class="nav-title">Contact</span>
+        <span class="nav-desc">Get in touch</span>
+      </a>
+    </nav>
+  </div>
+
+</div>
+
+<div class="footer-strip">
+  <span>© 2026 Your Name</span>
+  <div class="footer-links">
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://twitter.com" target="_blank">Twitter</a>
+    <a href="https://github.com" target="_blank">GitHub</a>
+  </div>
+</div>
+
+</body>
+</html>
